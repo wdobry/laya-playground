@@ -1,6 +1,6 @@
 # Laya playground
 
-A website, three games, a benchmark and an agent skill for [Laya](https://github.com/NandhaKishorM/laya), the open-source decision model: typed questions in, real probabilities out, one forward pass, no generated text. It runs on your own machine.
+A website, four games, a benchmark and an agent skill for [Laya](https://github.com/NandhaKishorM/laya), the open-source decision model: typed questions in, real probabilities out, one forward pass, no generated text. It runs on your own machine.
 
 The live site is at **[brainfunctioncollapse.com/laya](https://brainfunctioncollapse.com/laya)**. It has no model behind it and replays recorded runs. Clone this repository and the same pages run against the real model.
 
@@ -19,7 +19,7 @@ Then open <http://127.0.0.1:8770>. The first start downloads 2.3 GB of open weig
 
 You get the whole site, live:
 
-- `/` the landing page, where the model plays Flappy, a lane runner and Tetris itself, about 30 decisions a second
+- `/` the landing page, where the model plays Flappy, a lane runner, Tetris and Snake itself, about 30 decisions a second
 - `/playground` the editor: write some text and a few typed questions, see every answer with its probabilities, compare all three checkpoints
 - `/about` why this exists
 
@@ -66,7 +66,7 @@ Two of the source datasets restrict redistribution, so the sampled texts and the
 | `server.py`, `poc.py` | the local model server and the proof of concept it grew from |
 | `index.html`, `about.html`, `playground.html` | the three pages |
 | `static/` | styles, scripts, and the recorded data the public site replays |
-| `static/demos/` | the three games: Flappy, a lane runner and Tetris. Each one describes its situation in a sentence and asks one typed question |
+| `static/demos/` | the four games: Flappy, a lane runner, Tetris and Snake. Each one describes its situation in a sentence and asks one typed question |
 | `skills/laya-integration/SKILL.md` | the agent skill |
 | `eval/` | the benchmark: dataset builder, tasks, runner |
 | `tools/` | recorders for the replays, and small site checks |

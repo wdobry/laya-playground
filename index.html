@@ -53,7 +53,7 @@
       "codeSampleType": "full solution", "downloadUrl": "https://brainfunctioncollapse.com/laya/skills/laya-integration/SKILL.md",
       "author": { "@id": "https://brainfunctioncollapse.com/#bfc" }, "about": { "@id": "https://github.com/NandhaKishorM/laya" } },
     { "@type": "WebApplication", "@id": "https://brainfunctioncollapse.com/laya#playground", "name": "Laya playground",
-      "description": "A playground for the Laya decision model with three live game demos, a typed-question editor and recorded runs.",
+      "description": "A playground for the Laya decision model with four live game demos, a typed-question editor and recorded runs.",
       "url": "https://brainfunctioncollapse.com/laya/playground", "applicationCategory": "DeveloperApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "creator": { "@id": "https://brainfunctioncollapse.com/#bfc" }, "isBasedOn": { "@id": "https://github.com/NandhaKishorM/laya" } },
@@ -225,7 +225,7 @@
 <div class="seam"></div>
 
 <nav class="index" aria-label="On this page">
-  <a href="./#versus">Vs Jev</a><a href="./#flappy">Flappy</a><a href="./#runner">Runner</a><a href="./#tetris">Tetris</a><a href="./#compare">Compare</a><a href="./#use-cases">Use cases</a><a href="./#skill">Skill</a><a href="./#run-it">Run it</a>
+  <a href="./#versus">Vs Jev</a><a href="./#flappy">Flappy</a><a href="./#runner">Runner</a><a href="./#tetris">Tetris</a><a href="./#snake">Snake</a><a href="./#compare">Compare</a><a href="./#use-cases">Use cases</a><a href="./#skill">Skill</a><a href="./#run-it">Run it</a>
 </nav>
 
 <section class="block" id="versus">
@@ -300,6 +300,20 @@
   </div>
 </section>
 
+<section class="block" id="snake">
+  <div class="head">
+    <h2>One safe loop.<br>Four verdicts.<br>Ten cells a second.</h2>
+    <div class="aside"><p class="lead">The board is a Hamiltonian cycle, so there is always a safe way round. Each cell the code labels the four directions in plain English and Laya picks one; a shield keeps a fatal pick off the board.</p></div>
+  </div>
+  <div class="live game-mount" data-demo="snake"></div>
+  <div class="qa">
+    <div><h3>How does a classifier play Snake?</h3>
+      <p>Code does the geometry: for each direction it works out whether the step is legal, whether it stays on the safe loop (never crossing the tail, never skipping the food), and whether it eats. Each verdict becomes a sentence like <code>Safe. Best route to food.</code> and Laya returns P over the four directions. It plays the highest safe one.</p></div>
+    <div><h3>What is the shield?</h3>
+      <p>The same deterministic cycle the board is built on. If the model’s top pick would cross the tail or hit a wall, the shield swaps in the model’s best <em>safe</em> direction instead. It is counted and shown, not hidden, so you can see how often the raw model would have died.</p></div>
+  </div>
+</section>
+
 <section class="block" id="compare">
   <div class="head">
     <h2>One email.<br>Five questions.<br>59 milliseconds.</h2>
@@ -365,7 +379,7 @@
 <section class="block" id="run-it">
   <div class="head">
     <h2>Clone it. Run it.<br>Keep it.</h2>
-    <div class="aside"><p class="lead">The model server, all three games, the benchmark and the recorder, in one repository. Apple silicon, NVIDIA or plain CPU.</p></div>
+    <div class="aside"><p class="lead">The model server, all four games, the benchmark and the recorder, in one repository. Apple silicon, NVIDIA or plain CPU.</p></div>
   </div>
   <pre class="cmd" id="runCmd" data-repo-text>git clone {repo}
 cd {dir}

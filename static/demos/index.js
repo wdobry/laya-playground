@@ -17,5 +17,6 @@
 import flappy from './flappy.js';
 import runner from './runner.js';
 import tetris from './tetris.js';
+import snake from './snake.js';
 
-export default [flappy, runner, tetris];
+export default [flappy, runner, tetris, snake];
