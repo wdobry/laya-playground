@@ -89,6 +89,26 @@ def preload():
             print("[laya] %s ready in %.1fs" % (name, time.perf_counter() - t0), flush=True)
         except Exception as e:
             print("[laya] failed to load %s: %s" % (name, e), flush=True)
+    warm_up()
+
+
+def warm_up():
+    """One throwaway predict per checkpoint so the first real request skips CUDA kernel
+    compilation (~250 ms on this machine)."""
+    if all(STATUS[m] != "ready" for m in MODELS):
+        return
+    questions = {"warm": {"type": "noul", "instructions": "Is this a warmup call?"}}
+    for name in MODELS:
+        if STATUS[name] != "ready":
+            continue
+        try:
+            with LOCK:
+                agent = ROUTER.load(name)
+                t0 = time.perf_counter()
+                agent.system_one({"text": "warmup"}, questions)
+            print("[laya] %s warmed up (%.0f ms first inference)" % (name, (time.perf_counter() - t0) * 1000), flush=True)
+        except Exception as e:
+            print("[laya] warmup failed for %s: %s" % (name, e), flush=True)
 
 
 def validate(questions):
@@ -162,8 +182,15 @@ class Handler(BaseHTTPRequestHandler):
         if path in PAGES:
             self._static(PAGES[path], root_file=True)
         elif path == "/api/health":
+            # Report the device inference actually runs on: CUDA first, then MPS, else CPU.
+            # The old check only asked for MPS, so NVIDIA machines were told "cpu".
+            device = "cpu"
+            if torch.cuda.is_available():
+                device = "cuda"
+            elif torch.backends.mps.is_available():
+                device = "mps"
             self._send(200, {"models": STATUS, "version": laya.__version__, "torch": torch.__version__,
-                             "device": "mps" if torch.backends.mps.is_available() else "cpu"})
+                             "device": device})
         elif path == "/api/presets":
             self._send(200, PRESETS)
         elif path.startswith(("/static/", "/skills/")):
